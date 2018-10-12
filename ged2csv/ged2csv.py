@@ -1,6 +1,13 @@
 #!/usr/bin/env python
 '''
-TODO: documentation
+Reads records from a Gedcom file ([filename].ged) and writes relevant fields to a CSV.
+
+Usage:
+    ged2csv.py [GED filename] [CSV filename]
+
+Arguments:
+    GED filename:       Path to a Gedcom file.
+    CSV filename:       Path to output CSV file.
 '''
 
 from ged4py import GedcomReader
