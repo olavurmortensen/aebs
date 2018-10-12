@@ -4,6 +4,7 @@ Functions for reading in and extracting information from genealogies produced by
 '''
 
 import pandas as pd
+import numpy as np
 import warnings
 
 
@@ -148,6 +149,9 @@ def genealogy(inds, gen, lin, depth=None, d=0, by=None):
     checks whether an individual is already added to the lineage, avoiding unnecessary
     CPU usage and memory overhead.
 
+    The `depth` parameter specifies the depth of the individual lineages, and does not
+    give any guarantees about the total generational depth of the complete genealogy.
+
     Example:
         gen2 = genealogy(1, gen, dict())
         gen3 = genealogy(1, gen, dict(), depth=5, by=1800)
@@ -168,6 +172,75 @@ def genealogy(inds, gen, lin, depth=None, d=0, by=None):
         lin = lineage(ind, gen, lin, depth, d, by)
 
     return lin
+
+
+
+class Gen(object):
+    def __init__(self, csv, inds=None, depth=None, by=None):
+        # Read CSV into dictionary.
+        dd = csv2dict(csv)
+
+        dd = self.add_children(dd)
+
+        if inds is None:
+            inds = dd.keys()
+        self.gen = genealogy(inds, dd, dict(), depth=depth, by=by)
+
+        # Create a dataframe with the same information as in self.gen.
+        df = pd.DataFrame.from_dict(self.gen, orient='index')
+
+        # Get IDs of founder individuals.
+        # First find the records where both father and mother IDs are 0.
+        idx = np.logical_and(df.father.values == 0, df.mother.values == 0)
+        # Get the IDs of these records.
+        self.founders = np.array(df.index[idx])
+
+        # TODO: find individuals with no children
+        # TODO: calculate depth
+
+
+    def add_children(self, gen):
+        '''
+        Add each individuals children to a "children" field in the record.
+        '''
+        for ind, rec in gen.items():
+            fa = rec['fa']
+            mo = rec['mo']
+
+            fa_rec = self.get(fa)
+            mo_rec = self.get(mo)
+
+            # Check that the parent is present in the genealogy.
+            # ID different from 0, and record present.
+            if fa != 0 and fa_rec is not None:
+                # Append individual to list of parents children.
+                if fa_rec.get('children') is not None:
+                    fa_rec['children'].append(ind)
+                else:
+                    fa_rec['children'] = [ind]
+                # Store result in genealogy.
+                gen[fa] = fa_rec
+
+            # Check that the parent is present in the genealogy.
+            # ID different from 0, and record present.
+            if mo != 0 and mo_rec is not None:
+                # Append individual to list of parents children.
+                if mo_rec.get('children') is not None:
+                    mo_rec['children'].append(ind)
+                else:
+                    mo_rec['children'] = [ind]
+                # Store result in genealogy.
+                gen[mo] = mo_rec
+
+        return gen
+
+
+    def get(self, ind):
+        return self.gen.get(ind)
+
+
+
+
 
 
 
