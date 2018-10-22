@@ -165,6 +165,7 @@ class Gen(object):
             rec = gen.get(1)
             father = rec.fa
             mother = rec.mo
+            gen.write_csv('small_genealogy.csv')
 
         Input:
             csv:        String, path to Gedcom ([filename].ged) file, produced by `ged2csv.py`.
@@ -204,6 +205,16 @@ class Gen(object):
                 dd[row.ind] = Individual(row.father, row.mother, row.sex, row.birth_place, row.birth_year)
 
         return dd
+
+    def write_csv(self, path):
+        '''Write genealogy to a CSV file.'''
+        with open(path, 'w') as fid:
+            fid.write('ind,father,mother,sex,birth_place,birth_year\n')
+            for ind in self.gen.keys():
+                rec = self.get(ind)
+                fid.write('%d,%d,%d,%s,%s,%s\n' %(ind, rec.fa, rec.mo, rec.sex, rec.birth_place, rec.birth_year))
+
+
 
 
 
