@@ -8,6 +8,35 @@ import numpy as np
 import warnings
 
 
+class Individual(object):
+    def __init__(self, fa, mo, sex, by, bp):
+        self.fa = fa
+        self.mo = mo
+        self.sex = sex
+        self.birth_place = by
+        self.birth_year = bp
+
+
+def csv2dict(csv):
+    '''Read genealogy from CSV into a dictionary of individual objects.'''
+
+    # Read CSV into dataframe.
+    df = pd.read_csv(csv)
+
+    dd = dict()
+    for i in range(len(df)):
+        # Obtain row of dataframe.
+        row = df.loc[i]
+        # Check that ID isn't already in dictionary.
+        if row.ind in dd:
+            warnings.warn('Individual RIN %d is associated with multiple records. Ignoring all but first seen record.' %row.ind, Warning)
+        else:
+            # Add record to dictionary.
+            #dd[row.ind] = {'fa': row.father, 'mo': row.mother, 'sex': row.sex, 'birth_place': row.birth_place, 'birth_year': row.birth_year}
+            dd[row.ind] = Individual(row.father, row.mother, row.sex, row.birth_place, row.birth_year)
+
+    return dd
+
 
 def calc_depth(ind, gen, d=0, depth=0):
     '''
@@ -109,6 +138,7 @@ def lineage(ind, gen, lin, depth=None, d=0, by=None):
 
     return lin
 
+
 def genealogy(inds, gen, lin, depth=None, d=0, by=None):
     '''
     Generate lineages of multiple individuals based on complete genealogy available.
@@ -142,15 +172,6 @@ def genealogy(inds, gen, lin, depth=None, d=0, by=None):
         lin = lineage(ind, gen, lin, depth, d, by)
 
     return lin
-
-
-class Individual(object):
-    def __init__(self, fa, mo, sex, by, bp):
-        self.fa = fa
-        self.mo = mo
-        self.sex = sex
-        self.birth_place = by
-        self.birth_year = bp
 
 
 class Gen(object):
