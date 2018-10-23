@@ -196,7 +196,7 @@ class Gen(object):
         '''
 
         # Read genealogy into a dictionary of individual objects.
-        dd = self.read_csv(csv)
+        dd = csv2dict(csv)
 
         self.gen = genealogy(inds, dd, dict(), depth=depth, by=by)
 
@@ -208,26 +208,6 @@ class Gen(object):
 
     def get(self, ind):
         return self.gen.get(ind)
-
-    def read_csv(self, csv):
-        '''Read genealogy from CSV into a dictionary of individual objects.'''
-
-        # Read CSV into dataframe.
-        df = pd.read_csv(csv)
-
-        dd = dict()
-        for i in range(len(df)):
-            # Obtain row of dataframe.
-            row = df.loc[i]
-            # Check that ID isn't already in dictionary.
-            if row.ind in dd:
-                warnings.warn('Individual RIN %d is associated with multiple records. Ignoring all but first seen record.' %row.ind, Warning)
-            else:
-                # Add record to dictionary.
-                #dd[row.ind] = {'fa': row.father, 'mo': row.mother, 'sex': row.sex, 'birth_place': row.birth_place, 'birth_year': row.birth_year}
-                dd[row.ind] = Individual(row.father, row.mother, row.sex, row.birth_place, row.birth_year)
-
-        return dd
 
     def write_csv(self, path):
         '''Write genealogy to a CSV file.'''
