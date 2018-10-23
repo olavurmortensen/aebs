@@ -1,0 +1,96 @@
+0 HEAD
+1 SOUR Legacy
+2 VERS 7.5
+2 NAME Legacy (R)
+2 CORP Millennia Corp.
+3 ADDR PO Box 9410
+4 CONT Surprise, AZ 85374
+1 DEST Gedcom5.5.1
+1 DATE 23 Oct 2018
+1 SUBM @S0@
+1 FILE Z:\home\olavur\Dropbox\my_folder\workstuff\ilegusavnid\aebs\legacy\gedcom_data\small_test_tree\small_test_tree.ged
+1 GEDC
+2 VERS 5.5.1
+2 FORM LINEAGE-LINKED
+1 CHAR UTF-8
+0 @S0@ SUBM
+1 NAME Ólavur Mortensen
+1 EMAIL olavur@fargen.fo
+0 @I1@ INDI
+1 NAME John //
+1 SEX M
+1 BIRT
+2 DATE 1990
+2 PLAC Fakeplace
+1 REFN 1
+1 FAMC @F1@
+0 @I2@ INDI
+1 NAME Joe //
+1 SEX M
+1 BIRT
+2 DATE 1950
+2 PLAC Fakeplace
+1 REFN 2
+1 FAMS @F1@
+1 FAMC @F2@
+0 @I3@ INDI
+1 NAME Linda //
+1 SEX F
+1 BIRT
+2 DATE 1952
+2 PLAC Anotherfakeplace
+1 REFN 3
+1 FAMS @F1@
+1 FAMC @F3@
+0 @I4@ INDI
+1 NAME Sam //
+1 SEX M
+1 BIRT
+2 DATE 1930
+2 PLAC Fakeplace
+1 DEAT
+2 DATE 2010
+1 REFN 4
+1 FAMS @F2@
+0 @I5@ INDI
+1 NAME Christina //
+1 SEX F
+1 BIRT
+2 DATE 1929
+2 PLAC Fakeplace
+1 REFN 5
+1 FAMS @F2@
+0 @I6@ INDI
+1 NAME Tom //
+1 SEX M
+1 BIRT
+2 DATE 1933
+2 PLAC Anotherfakeplace
+1 DEAT
+2 DATE 2010
+1 REFN 6
+1 FAMS @F3@
+0 @I7@ INDI
+1 NAME Diane //
+1 SEX F
+1 BIRT
+2 DATE 1935
+2 PLAC Anotherfakeplace
+1 REFN 7
+1 FAMS @F3@
+0 @F1@ FAM
+1 HUSB @I2@
+1 WIFE @I3@
+1 MARR
+1 CHIL @I1@
+0 @F2@ FAM
+1 HUSB @I4@
+1 WIFE @I5@
+1 MARR
+1 CHIL @I2@
+0 @F3@ FAM
+1 HUSB @I6@
+1 WIFE @I7@
+1 MARR
+1 CHIL @I3@
+0 TRLR
