@@ -180,12 +180,21 @@ class Gen(object):
         Construct a genealogy object of specified individuals, taking ancestors from
         supplied CSV file.
 
-        Example:
+        Examples:
+            # Construct a genealogy of three specific individuals from CSV file.
             gen = Gen('path/to/genealogy.csv', [1,2,3])
-            ind = 1
+
+            # Retrieve a single record.
             rec = gen.get(1)
+
+            # Individual's parents.
             father = rec.fa
             mother = rec.mo
+
+            # Number of individuals in genealogy.
+            n = len(gen.individuals)
+
+            # Write genealogy to CSV.
             gen.write_csv('small_genealogy.csv')
 
         Input:
