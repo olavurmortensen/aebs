@@ -203,6 +203,8 @@ class Gen(object):
         # The genealogy which gen is created from is no longer needed.
         del dd
 
+        self.individuals = list(self.gen.keys())
+
 
     def get(self, ind):
         return self.gen.get(ind)
