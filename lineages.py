@@ -205,8 +205,10 @@ class Gen(object):
         '''
 
         # Read genealogy into a dictionary of individual objects.
+        # This dictionary includes all individuals in input genealogy.
         dd = csv2dict(csv)
 
+        # Reconstruct genealogy of input individuals.
         self.gen = genealogy(inds, dd, dict(), depth=depth, by=by)
 
         # The genealogy which gen is created from is no longer needed.
@@ -225,16 +227,4 @@ class Gen(object):
             for ind in self.gen.keys():
                 rec = self.get(ind)
                 fid.write('%d,%d,%d,%s,%s,%s\n' %(ind, rec.fa, rec.mo, rec.sex, rec.birth_place, rec.birth_year))
-
-
-
-
-
-
-
-
-
-
-
-
 
