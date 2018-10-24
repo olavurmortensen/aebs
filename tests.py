@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import subprocess
-from lineages import csv2dict, Gen
+from genealogy.lineages import csv2dict, Gen
 
 def compare_records(rec1, rec2):
     '''Check that all fields in the two input records match.'''
