@@ -9,12 +9,19 @@ import warnings
 
 
 class Individual(object):
-    def __init__(self, fa, mo, sex, by, bp):
+    def __init__(self, fa, mo, sex, by, bp, child=None):
         self.fa = fa
         self.mo = mo
         self.sex = sex
         self.birth_place = by
         self.birth_year = bp
+        self.child = child
+
+    def add_child(self, ind, spouse):
+        if self.child is None:
+            self.child = [(ind, spouse)]
+        else:
+            self.child.append((ind, spouse))
 
 
 def csv2dict(csv):
@@ -219,6 +226,13 @@ class Gen(object):
 
     def get(self, ind):
         return self.gen.get(ind)
+
+    def add_children(self):
+
+        for ind in self.individuals:
+            rec = self.get(ind)
+            fa = self.get(rec.fa)
+            mo = self.get(rec.mo)
 
     def write_csv(self, path):
         '''Write genealogy to a CSV file.'''
