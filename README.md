@@ -1,4 +1,18 @@
 
+This repository contains code to convert data from the Gedcom 5.5.1 format to a simple CSV format, specifically in usage with Legacy Family Tree software, and to reconstruct the genealogies of specific individuals in said genealogy. The following are the steps to use this code:
+
+* Export data from Legacy to the Gedcom 5.5.1 format using UTF-8 encoding and the list of fields in the `export_list.gel` file
+* Go to the directory where this code is stored
+* Run the following commands:
+    * `source setup.py`
+    * `ged_cleanup.py [your GED file] [output GED file]`
+    * `ged2csv.py [your (cleaned) GED file] [output CSV file]
+* The output of the last command is your genealogy in CSV format
+* Find the RIN IDs of the individuals who's genealogy you want to reconstruct
+* Run `python lineages.py [your CSV] [your individuals list] [output CSV file]`
+
+To better understand the input to the various functions, see their documentation in the files themselves.
+
 
 # ged2csv
 
