@@ -6,6 +6,8 @@ The folder "ged2csv" contains scripts used for converting from Gedcom format to 
 
 The [ged4py v0.1.9 Python package](https://github.com/andy-z/ged4py) was used to parse the Gedcom data.
 
+The `export_list.gel` file is used when exporting data from Legacy, to include only the necessary fields. This includes some mandatory fields, and some others that are useful to us.
+
 # Genealogy CSV format
 
 The CSV files produced by `ged2csv.py` contains the following fields:
