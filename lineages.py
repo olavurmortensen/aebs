@@ -15,7 +15,6 @@ class Individual(object):
         self.sex = sex
         self.birth_place = by
         self.birth_year = bp
-        self.child = child
 
 
 def csv2dict(csv):
