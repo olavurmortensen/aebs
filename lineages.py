@@ -5,10 +5,10 @@ Functions for reading in and extracting information from genealogies produced by
 
 import pandas as pd
 import numpy as np
-import warnings
+import warnings, sys
 
 
-class Individual(object):
+class Record(object):
     def __init__(self, fa, mo, sex, by, bp):
         self.fa = fa
         self.mo = mo
@@ -33,7 +33,7 @@ def csv2dict(csv):
         else:
             # Add record to dictionary.
             #dd[row.ind] = {'fa': row.father, 'mo': row.mother, 'sex': row.sex, 'birth_place': row.birth_place, 'birth_year': row.birth_year}
-            dd[row.ind] = Individual(row.father, row.mother, row.sex, row.birth_place, row.birth_year)
+            dd[row.ind] = Record(row.father, row.mother, row.sex, row.birth_place, row.birth_year)
 
     return dd
 
@@ -188,3 +188,15 @@ class Gen(object):
                 rec = self.get(ind)
                 fid.write('%d,%d,%d,%s,%s,%s\n' %(ind, rec.fa, rec.mo, rec.sex, rec.birth_place, rec.birth_year))
 
+if __name__ == '__main__':
+    csv_path = sys.argv[1]
+    ind_path = sys.argv[2]
+    out_path = sys.argv[3]
+
+    ind = open(ind_path).read().split('\n')
+
+    # Construct a genealogy of three specific individuals from CSV file.
+    gen = Gen(csv_path, ind)
+
+    # Write genealogy to CSV.
+    gen.write_csv(out_path)
