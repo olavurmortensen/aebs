@@ -1,6 +1,15 @@
 #!/usr/bin/env python
 '''
-Functions for reading in and extracting information from genealogies produced by ged2csv.py.
+Functions for reading in and extracting information from genealogies produced by ged2csv.py. This script can also be executed direclty, to read in a genealogy and reconstruct the genealogy of specified individuals. See `Gen` class to learn how to use this class.
+
+Usage:
+    python lineages.py [CSV] [individuals] [output]
+
+Input:
+    CSV:              Input CSV file with genealogy.
+    Individuals:      List of individuals who's to reconstruct.
+    Output:           Filename to write resulting CSV to.
+
 '''
 
 import pandas as pd
@@ -82,8 +91,6 @@ def lineage(ind, gen, lin, depth=None, d=0, by=None):
     lin[ind] = rec
 
     # Get IDs of the individual's parents.
-    #fa = rec['fa']
-    #mo = rec['mo']
     fa = rec.fa
     mo = rec.mo
 
@@ -189,11 +196,16 @@ class Gen(object):
                 fid.write('%d,%d,%d,%s,%s,%s\n' %(ind, rec.fa, rec.mo, rec.sex, rec.birth_place, rec.birth_year))
 
 if __name__ == '__main__':
-    csv_path = sys.argv[1]
-    ind_path = sys.argv[2]
-    out_path = sys.argv[3]
+    assert len(sys.argv) > 3, 'Not enough arguments supplied, see documentation of "lineages.py".'
 
-    ind = open(ind_path).read().split('\n')
+    csv_path = sys.argv[1]  # Input CSV file with genealogy.
+    ind_path = sys.argv[2]  # List of individuals who's to reconstruct.
+    out_path = sys.argv[3]  # Filename to write resulting CSV to.
+
+    # Read lines in individual list.
+    ind = open(ind_path).readlines()
+    # Remove whitespace.
+    ind = [int(i.strip()) for i in ind]
 
     # Construct a genealogy of three specific individuals from CSV file.
     gen = Gen(csv_path, ind)
