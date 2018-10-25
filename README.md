@@ -25,8 +25,7 @@ The CSV files produced by `ged2csv.py` contains the following fields:
 
 # Unit tests
 
-Simple unit tests are implemented in `tests.py`, and test data is found in the `test_data` directory. In these tests, a small dataset was used, with fictional individuals, and the figure below shows the tree of this family (**TODO**). The individuals in this family tree were manually typed into Legacy, and exported to Gedcom 5.5.1 using UTF-8 encoding. The tests first convert the Gedcom data to CSV, then check that the records match the expected (which are manually typed into the `correct_results.csv` file), testing the functionality of the `csv2dict` function and the `Gen` class.
+Simple unit tests are implemented in `tests.py`, and test data is found in the `test_data` directory. To create a fictional family tree, the individuals were manually typed into Legacy, and exported to Gedcom 5.5.1 using UTF-8 encoding. The tests first convert the Gedcom data to CSV, then check that the records match the expected (which are manually typed into the `correct_results.csv` file), testing the functionality of the `csv2dict` function and the `Gen` class.
 
-<img src="" alt="Family tree used in tests" width="" />
 
 
