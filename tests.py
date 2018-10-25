@@ -89,6 +89,7 @@ if __name__ == '__main__':
     ged_cleaned = data_dir + '/small_test_tree_cleaned.ged'
     csv = data_dir + '/small_test_tree.csv'
     csv_correct = data_dir + '/correct_results.csv'
+    inds = data_dir + '/test_individuals.txt'
 
     print('Cleaning up GED data.')
     subprocess.call('ged_cleanup.sh %s %s' %(ged, ged_cleaned), shell=True)
@@ -105,6 +106,14 @@ if __name__ == '__main__':
     assert result, "RIN IDs in Gen object don't match the expected."
     result = check_gen_records(csv, csv_correct)
     assert result, 'Information in at least one record in Gen object does not match the expected.'
+
+    # Check records when executing lineages.py directly.
+    exec_out = data_dir + '/small_test_tree_lineages_exec.csv'
+    subprocess.call('python lineages.py %s %s %s' %(csv, inds, exec_out), shell=True)
+    result = check_ids(exec_out, csv_correct)
+    assert result, "RIN IDs in CSV file produced from executing lineage.py directly don't match the expected."
+    result = check_records(exec_out, csv_correct)
+    assert result, 'Information in at least one record in CSV from executing lineages.py directly does not match the expected.'
 
     print('All tests have succeeded.')
 
