@@ -24,12 +24,16 @@ gen = list()
 
 count_none_rin = 0
 
+def format_rin(rin):
+    '''Extract RIN, as Gedcom represents RIN as e.g. @I1@.'''
+    return rin[2:-1]
+
 # Initialize GED parser.
 with GedcomReader(ged_path, encoding='utf-8') as parser:
     # iterate over all INDI records
     for i, record in enumerate(parser.records0('INDI')):
         # Get individual RIN ID.
-        ind_ref = int(record.xref_id[2:-1])
+        ind_ref = int(format_rin(record.xref_id))
 
         # Get the RIN ID of the individuals parents.
         # If the parent does not exist, set to 0.
@@ -38,13 +42,13 @@ with GedcomReader(ged_path, encoding='utf-8') as parser:
         fa_ref = 0
         if not fa is None:
             if fa.xref_id is not None:
-                fa_ref = int(fa.xref_id[2:-1])
+                fa_ref = int(format_rin(fa.xref_id))
 
         mo = record.mother
         mo_ref = 0
         if not mo is None:
             if mo.xref_id is not None:
-                mo_ref = int(mo.xref_id[2:-1])
+                mo_ref = int(format_rin(mo.xref_id))
 
         # Get information about individual in a dictionary.
         ind_records = {r.tag: r for r in record.sub_records}
