@@ -85,17 +85,21 @@ def check_gen_records(csv, csv_correct):
 if __name__ == '__main__':
     data_dir = 'test_data'
 
+    # Input data.
     ged = data_dir + '/small_test_tree.ged'
-    ged_cleaned = data_dir + '/small_test_tree_cleaned.ged'
-    csv = data_dir + '/small_test_tree.csv'
     csv_correct = data_dir + '/correct_results.csv'
     inds = data_dir + '/test_individuals.txt'
 
+    # Output data.
+    csv = data_dir + '/small_test_tree.csv'
+    ged_cleaned = data_dir + '/small_test_tree_cleaned.ged'
+    exec_out = data_dir + '/small_test_tree_lineages_exec.csv'
+
     print('Cleaning up GED data.')
-    subprocess.call('ged_cleanup.sh %s %s' %(ged, ged_cleaned), shell=True)
+    subprocess.check_output('ged_cleanup.sh %s %s' %(ged, ged_cleaned), shell=True)
 
     print('Converting from GED to CSV.')
-    subprocess.call('ged2csv.py %s %s' %(ged_cleaned, csv), shell=True)
+    subprocess.check_output('ged2csv.py %s %s' %(ged_cleaned, csv), shell=True)
 
     print('Checking data in CSV.')
     result = check_ids(csv, csv_correct)
@@ -108,7 +112,6 @@ if __name__ == '__main__':
     assert result, 'Information in at least one record in Gen object does not match the expected.'
 
     # Check records when executing lineages.py directly.
-    exec_out = data_dir + '/small_test_tree_lineages_exec.csv'
     subprocess.call('python lineages.py %s %s %s' %(csv, inds, exec_out), shell=True)
     result = check_ids(exec_out, csv_correct)
     assert result, "RIN IDs in CSV file produced from executing lineage.py directly don't match the expected."
@@ -116,5 +119,9 @@ if __name__ == '__main__':
     assert result, 'Information in at least one record in CSV from executing lineages.py directly does not match the expected.'
 
     print('All tests have succeeded.')
+
+    print('Removing temporary files.')
+
+    subprocess.check_call('rm %s %s %s' %(ged_cleaned, csv, exec_out), shell=True)
 
 

@@ -1,8 +1,0 @@
-ind,father,mother,sex,birth_place,birth_year
-1,2,3,M,Fakeplace,1990
-2,4,5,M,Fakeplace,1950
-3,6,7,F,Anotherfakeplace,1952
-4,0,0,M,Fakeplace,1930
-5,0,0,F,Fakeplace,1929
-6,0,0,M,Anotherfakeplace,1933
-7,0,0,F,Anotherfakeplace,1935
