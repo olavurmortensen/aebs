@@ -14,7 +14,7 @@ Input:
 
 import pandas as pd
 import numpy as np
-import warnings, sys
+import warnings, argparse
 
 
 class Record(object):
@@ -22,8 +22,8 @@ class Record(object):
         self.fa = fa
         self.mo = mo
         self.sex = sex
-        self.birth_place = by
-        self.birth_year = bp
+        self.birth_place = bp
+        self.birth_year = by
 
 
 def csv2dict(csv):
@@ -41,8 +41,12 @@ def csv2dict(csv):
             warnings.warn('Individual RIN %d is associated with multiple records. Ignoring all but first seen record.' %row.ind, Warning)
         else:
             # Add record to dictionary.
-            #dd[row.ind] = {'fa': row.father, 'mo': row.mother, 'sex': row.sex, 'birth_place': row.birth_place, 'birth_year': row.birth_year}
-            dd[row.ind] = Record(row.father, row.mother, row.sex, row.birth_place, row.birth_year)
+            if np.isnan(row.birth_year):
+                birth_year = np.nan
+            else:
+                birth_year = int(row.birth_year)
+
+            dd[row.ind] = Record(row.father, row.mother, row.sex, birth_year, row.birth_place)
 
     return dd
 
@@ -193,14 +197,26 @@ class Gen(object):
             fid.write('ind,father,mother,sex,birth_place,birth_year\n')
             for ind in self.gen.keys():
                 rec = self.get(ind)
-                fid.write('%d,%d,%d,%s,%s,%s\n' %(ind, rec.fa, rec.mo, rec.sex, rec.birth_place, rec.birth_year))
+                fid.write('%d,%d,%d,%s,"%s",%s\n' %(ind, rec.fa, rec.mo, rec.sex, rec.birth_place, rec.birth_year))
 
 if __name__ == '__main__':
-    assert len(sys.argv) > 3, 'Not enough arguments supplied, see documentation of "lineages.py".'
+    parser = argparse.ArgumentParser()
 
-    csv_path = sys.argv[1]  # Input CSV file with genealogy.
-    ind_path = sys.argv[2]  # List of individuals who's to reconstruct.
-    out_path = sys.argv[3]  # Filename to write resulting CSV to.
+    # Arguments for parser.
+    parser.add_argument('--csv', type=str, required=True)
+    parser.add_argument('--ind', type=str, required=True)
+    parser.add_argument('--out', type=str, required=True)
+    parser.add_argument('--by_thres', type=int)
+    parser.add_argument('--d_thres', type=int)
+
+    # Parse input arguments.
+    args = parser.parse_args()
+
+    csv_path = args.csv
+    ind_path = args.ind
+    out_path = args.out
+    birth_year = args.by_thres
+    depth = args.d_thres
 
     # Read lines in individual list.
     ind = open(ind_path).readlines()
@@ -208,7 +224,7 @@ if __name__ == '__main__':
     ind = [int(i.strip()) for i in ind]
 
     # Construct a genealogy of three specific individuals from CSV file.
-    gen = Gen(csv_path, ind)
+    gen = Gen(csv_path, ind, depth=depth, by=birth_year)
 
     # Write genealogy to CSV.
     gen.write_csv(out_path)
