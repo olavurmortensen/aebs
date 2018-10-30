@@ -112,7 +112,7 @@ if __name__ == '__main__':
     assert result, 'Information in at least one record in Gen object does not match the expected.'
 
     # Check records when executing lineages.py directly.
-    subprocess.call('lineages.py %s %s %s' %(csv, inds, exec_out), shell=True)
+    subprocess.call('lineages.py --csv %s --ind %s --out %s' %(csv, inds, exec_out), shell=True)
     result = check_ids(exec_out, csv_correct)
     assert result, "RIN IDs in CSV file produced from executing lineage.py directly don't match the expected."
     result = check_records(exec_out, csv_correct)
