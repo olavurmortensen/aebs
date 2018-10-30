@@ -75,11 +75,9 @@ def lineage(ind, gen, lin, depth=None, d=0, by=None):
     '''
 
     # If the current individual is already in the genealogy, we do nothing.
+    # If this happens, something is wrong.
     if ind in lin:
-        return lin
-
-    # If we have reached the maximum genereational depth, we do nothing.
-    if depth is not None and d > depth:
+        warnings.warn('Individual %d already exists in genealogy.' %ind, Warning)
         return lin
 
     # Get record corresponding to individual.
@@ -87,8 +85,9 @@ def lineage(ind, gen, lin, depth=None, d=0, by=None):
 
     assert rec is not None, 'Individual %d does not exist in genealogy.' % ind
 
-    # If we have reached the minimum birth year, we do nothing.
-    if by is not None and rec.birth_year < by:
+    # If we have reached the minimum birth year or the maximum genereational depth, we do
+    # nothing.
+    if by is not None and rec.birth_year < by or depth is not None and d > depth:
         return lin
 
     # Add record to lineage.
@@ -143,6 +142,27 @@ def genealogy(inds, gen, lin, depth=None, d=0, by=None):
         lin = lineage(ind, gen, lin, depth, d, by)
 
     return lin
+
+
+def sim_gen(ind, gen, d, dmax, sex):
+
+    if d > dmax:
+        return gen
+
+    fa = np.random.randint(1, 1000000)
+    mo = np.random.randint(1, 1000000)
+
+    while fa in gen:
+        fa = np.random.randint(1, 1000000)
+    while fa in gen:
+        mo = np.random.randint(1, 1000000)
+
+    gen[ind] = Record(fa, mo, sex, None, None)
+
+    gen = sim_gen(fa, gen, d+1, dmax, 1)
+    gen = sim_gen(mo, gen, d+1, dmax, 2)
+
+    return gen
 
 
 class Gen(object):
@@ -228,3 +248,6 @@ if __name__ == '__main__':
 
     # Write genealogy to CSV.
     gen.write_csv(out_path)
+
+
+
