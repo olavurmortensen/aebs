@@ -33,9 +33,8 @@ def csv2dict(csv):
     df = pd.read_csv(csv)
 
     dd = dict()
-    for i in range(len(df)):
+    for i, row in df.iterrows():
         # Obtain row of dataframe.
-        row = df.loc[i]
         # Check that ID isn't already in dictionary.
         if row.ind in dd:
             warnings.warn('Individual RIN %d is associated with multiple records. Ignoring all but first seen record.' %row.ind, Warning)
