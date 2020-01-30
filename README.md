@@ -1,5 +1,30 @@
 
-This repository contains code to convert data from the Gedcom 5.5.1 format to a simple CSV format, specifically in usage with Legacy Family Tree software, and to reconstruct the genealogies of specific individuals in said genealogy. The following are the steps to use this code:
+This repository contains code to convert data from the Gedcom 5.5.1 format to a simple CSV format, specifically in usage with Legacy Family Tree software, and to reconstruct the genealogies of specific individuals in said genealogy. More specifically, this code is developed to deal with the Genealogy Registry in the Genetic Biobank of the Faroe Islands (http://biobank.gov.fo/?lang=en).
+
+# Installation / setup
+
+To run this code there are some software requirements:
+
+* Python 3.6
+* Pandas 1.0.0
+* ged4py 0.1.11
+
+The recommended way of installing these is to first setup a conda environment using the `environment.yml` file in this repo:
+
+```
+conda env create -f environment.yml
+```
+
+And then install `ged4py` on that environment with pip:
+
+```
+conda activate aebs-dev  # Activate the environment created above.
+pip install ged4py==0.1.11
+```
+
+# Usage
+
+The following are the steps to use this code:
 
 * Export data from Legacy to the Gedcom 5.5.1 format using UTF-8 encoding and the list of fields in the `export_list.gel` file
 * Go to the directory where this code is stored
@@ -36,6 +61,8 @@ The CSV files produced by `ged2csv.py` contains the following fields:
 # Lineages
 
 `lineages.py` contains functions for reading in genealogies from a CSV produced by `ged2csv.py`, and working with these genealogies. The `Gen` class reads the records in a CSV into a dictionary, where each record is represented by the `Record` class. The `Gen` class reconstructs the genealogy of the input individuals, rather than just loading the entire genealogy in the CSV. The `lineages.py` script can also be executed from the commandline.
+
+**TODO:** how to use this.
 
 # Unit tests
 
