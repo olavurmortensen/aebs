@@ -3,7 +3,9 @@ name: aebs-dev
 
 channels:
     - conda-forge
+    - bioconda
 
 dependencies:
     - python=3.6
     - pandas=1.0.0
+    - snakemake-minimal=5.10.0
