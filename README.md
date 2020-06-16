@@ -15,13 +15,6 @@ The recommended way of installing these is to first setup a conda environment us
 conda env create -f environment.yml
 ```
 
-And then install `ged4py` on that environment with pip:
-
-```
-conda activate aebs-dev  # Activate the environment created above.
-pip install ged4py==0.1.11
-```
-
 # Usage
 
 The following are the steps to use this code:
