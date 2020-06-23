@@ -3,13 +3,12 @@
 Functions for reading in and extracting information from genealogies produced by ged2csv.py. This script can also be executed direclty, to read in a genealogy and reconstruct the genealogy of specified individuals. See `Gen` class to learn how to use this class.
 
 Usage:
-    python lineages.py [CSV] [individuals] [output]
+    python lineages.py --csv [CSV] --ind [individuals] --out [output]
 
 Input:
     CSV:              Input CSV file with genealogy.
-    Individuals:      List of individuals who's to reconstruct.
+    Individuals:      Text file with RIN of individuals to reconstruct.
     Output:           Filename to write resulting CSV to.
-
 '''
 
 import pandas as pd
@@ -72,12 +71,6 @@ def lineage(ind, gen, lin, depth=None, d=0, by=None):
     Returns:
     Dictionary, lineage of individual.
     '''
-
-    # If the current individual is already in the genealogy, we do nothing.
-    # If this happens, something is wrong.
-    if ind in lin:
-        warnings.warn('Individual %d already exists in genealogy.' %ind, Warning)
-        return lin
 
     # Get record corresponding to individual.
     rec = gen.get(ind)
