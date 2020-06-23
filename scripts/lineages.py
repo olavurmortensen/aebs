@@ -98,6 +98,10 @@ def lineage(ind, gen, lin, depth=None, d=0, by=None):
     if mo != 0:
         lin = lineage(ind=mo, gen=gen, depth=depth, d=d+1, lin=lin, by=by)
 
+    # NOTE: sometimes an individual is "unknown" in AEBS. Usually, such a person will
+    # not have a "BIRT" record, and will therefore have "nan" (or "NA") in rec.birth_year
+    # and rec.birth_place. Such a person will always have rec.fa = 0 and rec.mo = 0.
+
     return lin
 
 

@@ -56,6 +56,12 @@ with GedcomReader(ged_path, encoding='utf-8') as parser:
         sex = ind_records['SEX'].value
 
         birth = ind_records.get('BIRT')
+
+        # NOTE: some individuals are "unknown" in AEBS and usually have no "BIRT" record.
+        # Such individuals will always have parental records "0". Therefore, when reconstructing
+        # a genealogy in "scripts/lineage.py", any lineage will stop at such an "unknown"
+        # individual.
+
         # If birth year or place is not found in record, it is set to NA.
         birth_year = 'NA'
         birth_place = 'NA'
