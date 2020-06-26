@@ -75,7 +75,7 @@ for sample, pnum in progeny_ids.items():
 
 # Discard all records with no REFN.
 n_before = len(aebs_ids)
-for rin, refn in aebs_ids.items():
+for rin, refn in list(aebs_ids.items()):
     if len(refn) == 0:
         del aebs_ids[rin]
 
@@ -85,7 +85,7 @@ print('Records with no REFN discarded: %d' % (n_before - n_after))
 
 # Discard all records with REFN ending in 000.
 n_before = len(aebs_ids)
-for rin, refn in aebs_ids.items():
+for rin, refn in list(aebs_ids.items()):
     if refn[-3:] == '000':
         del aebs_ids[rin]
 
