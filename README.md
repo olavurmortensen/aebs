@@ -27,7 +27,7 @@ The following are the steps to use this code:
     * `ged2csv.py [your (cleaned) GED file] [output CSV file]`
 * The output of the last command is your genealogy in CSV format
 * Find the RIN IDs of the individuals who's genealogy you want to reconstruct
-* Run `python lineages.py [your CSV] [your individuals list] [output CSV file]`
+* Run `lineages.py --csv [your CSV] --ind [your individuals list] --out [output CSV file]`
 
 To better understand the input to the various functions, see their documentation in the files themselves.
 
