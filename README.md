@@ -1,3 +1,4 @@
+# AEBS
 
 This repository contains code to convert data from the Gedcom 5.5.1 format to a simple CSV format, specifically in usage with Legacy Family Tree software, and to reconstruct the genealogies of specific individuals in said genealogy. More specifically, this code is developed to deal with the Genealogy Registry in the Genetic Biobank of the Faroe Islands (http://biobank.gov.fo/?lang=en).
 
